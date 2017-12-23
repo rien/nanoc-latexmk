@@ -6,7 +6,7 @@ module Nanoc
       PATCH = 0
       BUILD = nil
 
-      STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('-')
+      STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('.')
     end
 
     VERSION = Version::STRING
