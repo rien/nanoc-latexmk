@@ -1,5 +1,7 @@
 # Nanoc-latexmk
 
+[![Gem Version](https://badge.fury.io/rb/nanoc-latexmk.svg)](https://badge.fury.io/rb/nanoc-latexmk)
+
 [Nanoc](https://nanoc.ws/) filter to compile `.tex` files to pdf using the `latexmk` command. Supports both `pdflatex` and `xelatex`.
 
 ## System requirements
