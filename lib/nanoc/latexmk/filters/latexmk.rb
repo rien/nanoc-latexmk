@@ -3,6 +3,7 @@
 require 'tmpdir'
 
 module Nanoc::Latexmk::Filters
+
   class LatexmkFilter < Nanoc::Filter
     identifier :latexmk
 
@@ -11,11 +12,11 @@ module Nanoc::Latexmk::Filters
     TMPFILE_NAME = 'nanoc-latexmk.tex'
 
     ENGINES = {
-      pdflatex: { cmd: %w[pdflatex], param: '-pdf' },
-      xelatex:  { cmd: %w[xelatex], param: '-xelatex' }
+      pdflatex: '-pdf',
+      xelatex:  '-xelatex'
     }.freeze
 
-    LATEX_PARAMS = %w[-interaction=nonstopmode -halt-on-error].freeze
+    LATEX_PARAMS = %w[-interaction=nonstopmode -halt-on-error -file-line-error].freeze
 
     DEFAULT_PARAMS = {
       engine: :pdflatex,
@@ -27,13 +28,11 @@ module Nanoc::Latexmk::Filters
       params = DEFAULT_PARAMS.merge(params)
 
       raise 'Unknown Engine' unless ENGINES.key? params[:engine].to_sym
-      engine = ENGINES[params[:engine].to_sym]
 
-      latex_command = engine[:cmd]
+      latex_params = []
+      latex_params += params[:command_params]
 
-      latex_command += params[:command_params]
-
-      latex_command << if params[:shell_escape]
+      latex_params << if params[:shell_escape]
                          '-shell-escape'
                        else
                          '-no-shell-escape'
@@ -44,15 +43,14 @@ module Nanoc::Latexmk::Filters
           f.write(content)
           f.flush
 
-          latexmk_command = ['latexmk',
-                             engine[:param],
-                             "-latex=\"#{latex_command.join(' ')}\"",
-                             "-output-directory=#{dir}",
-                             f.path]
+          latexmk_command = ['latexmk', ENGINES[params[:engine].to_sym]] \
+                            + latex_params.map { |p| '-latexoption=' + p } \
+                            + ["-output-directory=#{dir}", f.path ]
+
+          puts "Running latexmk command: #{latexmk_command}"
 
           raise 'Build Error' unless system(*latexmk_command)
           system('mv', f.path.sub('.tex', '.pdf'), output_filename)
-
         end
       end
     end
