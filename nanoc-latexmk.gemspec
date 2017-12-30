@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.homepage      = 'https://github.com/rien/nanoc-latexmk'
   s.summary       = 'Latexmk filter for nanoc.'
   s.description   = 'Nanoc filter to convert latex files to pdf using latexmk'
+  s.license       = 'Unlicense'
   s.files         = `git ls-files`.split("\n")
   s.require_path  = 'lib'
 end
