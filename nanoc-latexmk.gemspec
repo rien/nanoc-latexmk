@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version       = Nanoc::Latexmk::VERSION
   s.platform      = Gem::Platform::RUBY
   s.authors       = ['Rien Maertens']
-  s.email         = ['maertensrien@gmail.com']
+  s.email         = ['rien.maertens@posteo.be']
   s.homepage      = 'https://github.com/rien/nanoc-latexmk'
   s.summary       = 'Latexmk filter for nanoc.'
   s.description   = 'Nanoc filter to convert latex files to pdf using latexmk'
